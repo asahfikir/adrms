@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class);
+    }
 }
