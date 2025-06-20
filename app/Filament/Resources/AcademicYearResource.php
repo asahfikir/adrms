@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Models\Category;
+use App\Filament\Resources\AcademicYearResource\Pages;
+use App\Filament\Resources\AcademicYearResource\RelationManagers;
+use App\Models\AcademicYear;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CategoryResource extends Resource
+class AcademicYearResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = AcademicYear::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,10 +23,9 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('academic_year_id')
-                    ->relationship('academic_year', 'name')
-                    ->required(),
                 Forms\Components\TextInput::make('name')
+                    ->required(),
+                Forms\Components\Toggle::make('is_active')
                     ->required(),
             ]);
     }
@@ -37,6 +36,8 @@ class CategoryResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\IconColumn::make('is_active')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -62,16 +63,16 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\SubcategoriesRelationManager::class,
+            RelationManagers\CategoriesRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => Pages\ListAcademicYears::route('/'),
+            'create' => Pages\CreateAcademicYear::route('/create'),
+            'edit' => Pages\EditAcademicYear::route('/{record}/edit'),
         ];
     }
 }
