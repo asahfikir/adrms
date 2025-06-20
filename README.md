@@ -62,10 +62,10 @@ DB_USERNAME=root
 DB_PASSWORD=secret
 ```
 
-### 4. Run Migrations & Seeders
+### 4. Run Migrations & Seeders + Setup filament
 ```bash
-php artisan migrate --seed
-This will create default roles: superadmin, user, stakeholder.
+php artisan migrate --seed && php artisan shield:install
+# This will create default roles: superadmin, user, stakeholder.
 ```
 
 ### 5. Create Superadmin
@@ -75,7 +75,7 @@ php artisan tinker
     'name' => 'Admin',
     'email' => 'admin@example.com',
     'password' => bcrypt('password'),
-])->assignRole('superadmin');
+])->assignRole('super_admin');
 ```
 
 ## 🧪 Testing
